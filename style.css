@@ -1,0 +1,35 @@
+
+.delete-true {
+  	text-decoration: line-through;
+  	color: grey;
+	
+	border:2px solid red;
+}
+
+.delete-false {
+	border:1px solid black;
+}
+
+
+.wrapper {
+	text-align:center;
+	width:1000px;
+	margin:auto;
+}
+.container {
+	margin:auto;
+	width:750px;
+	padding:10px;
+	border:1px solid grey;
+	border-radius:10px;
+	box-shadow: 5px -5px 5px 0px rgba(66, 91, 77, 0.48);
+}
+.student{
+		
+}
+
+.studentList{
+	height:500px;
+	padding:0px;
+	overflow-y:scroll;
+}

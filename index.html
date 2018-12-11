@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en" ng-app="studentApp">
+  	<head>
+      	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<link rel="stylesheet"
+		  	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+		  	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		  	crossorigin="anonymous">
+          
+		<link rel="stylesheet"
+				href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+				integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+				crossorigin="anonymous">
+        
+		<script	src="https://code.jquery.com/jquery-3.2.1.min.js"
+				integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+				crossorigin="anonymous"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+				integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+				crossorigin="anonymous"></script>
+ 
+ 		<!-- angular cdn -->
+    	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+    
+    	<!-- To make the controller separated from the view, make it external -->
+    	<script src="controller.js"></script>
+		
+    	<link rel="stylesheet" href="style.css">
+  	</head>
+  	<body>
+	<div class="wrapper">
+	<div class="container">
+	<section ng-controller="StudentController">
+		<h2>Student Forms</h2>
+        <div>
+          
+          	<form ng-submit="addStudent(student)">
+            	<input type="text" size="30" required maxlength="40" placeholder="Name" id="Name" ng-model="student.Name">
+				<input type="number" size="30"  required maxlength="8" placeholder="Student ID" id="StudentID" ng-model="student.StudentID">
+				<input type="text" size="30" required maxlength="6" placeholder="Student Pawprint" id="Pawprint"  ng-model="student.Pawprint">
+				<input type="text" size="30" required maxlength="40" placeholder="Major" id="Major"  ng-model="student.Major">
+				Level: 
+				<select id="Level" required placeholder="Level"  ng-model="student.Level">
+					<option name="Freshman" id="Freshman" value="Freshman">Freshman</option>
+					<option name="Sophomore" id="Sophomore" value="Sophomore">Sophomore</option>
+					<option name="Junior" id="Junior" value="Junior"> Junior</option>
+					<option name="Senior" id="Senior" value="Senior">Senior</option>
+					<option name="Graduate" id="Graduate" value="Graduate">Graduate</option>
+				</select>
+				<input type="number" size="15" required maxlength="4" placeholder="GPA" step="0.1"  ng-model="student.GPA">
+				<input type="text" size="30" required maxlength="25" placeholder="Street" id="AddressStreet"  ng-model="student.AddressStreet">
+				<input type="text" size="30" required maxlength="15" placeholder="City" id="AddressCity" ng-model="student.AddressCity" >
+				<input type="text" size="30" required maxlength="20" placeholder="State" id="AddressState"  ng-model="student.AddressState">
+				<input type="number" size="30" required maxlength="6" placeholder="Zip" id="AddressZip"  ng-model="student.AddressZip">
+				<input type="text" size="30" required maxlength="40" placeholder="Student Email" type="email" id="Email"  ng-model="student.Email">
+            	<input class="btn-primary" type="submit" value="Add new Student">
+          	</form>
+			<div>
+			<h1>Student List</h1>
+			<div ng-init="statusFilter={}"></div>
+			<h2>There are currently {{students.length}}<a href=""  ng-click="statusFilter = {}"> total</a> students</h2>
+			<h3>
+			<a href="" ng-click="statusFilter = {Status:'Active_'}">Active Students: </a> {{(students | filter: {Status:'Active_'}:true).length}}
+			</h3>
+			<h3>
+			<a href="" ng-click="statusFilter = {Status:'Inactive'}">Inactive Students: </a> {{(students | filter: {Status:'Inactive'}:true).length}}
+			</h3>
+			
+			<ul class="studentList">
+				<li class="student" ng-repeat="student in students | filter:statusFilter track by $index " style="list-style-type:none;"">
+					<label class="checkbox delete-{{student.Delete}}">
+               			<input type="checkbox" ng-model="student.Delete">
+                		<span></span>
+					{{student.Name}} &nbsp &nbsp
+					<select name="status" id="status" ng-model="student.Status"
+						ng-options = "stat for stat in studentStatuses"> 
+					</select>
+					<br>
+						<div style="margin-left:180px">
+						<div style="text-align:left; padding-left:5em">ID: &nbsp {{student.StudentID}}
+						   Pawprint:{{student.Pawprint}}
+						<br>Email: {{student.Email}}
+						<br>Major:{{ student.Major }} &nbsp Level: {{ student.Level }} &nbsp GPA:{{ student.GPA}}
+						</div>
+						<div>Address:
+						{{ student.AddressStreet }}  
+						{{ student.AddressCity }}   
+						{{ student.AddressState }}
+						{{ student.AddressZip }}
+						</div>
+						</div>
+					</label>
+				</li>
+			</ul>
+			<h1><form ng-submit="deleteStudents()">
+					<input class="btn-primary" type="submit" value="Delete all Selected Students">
+				</form>
+			</h1>
+			
+			</div>
+        </div>
+    </section>
+	</div>
+	</div>
+  </body>
+</html>
